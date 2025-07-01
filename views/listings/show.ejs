@@ -1,0 +1,31 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+ .small-text {
+        font-size: 1.2rem !important;
+    }
+</style>
+<body>
+    <div class="show row mt-3">
+        <div class="col-6 offset-3">
+            <div class="card" >
+                <div class="card-body">
+                    <h2 class="card-title"><%= Listing.name %></h2>
+                    <p class="card-text">
+                        <p class="small-text"><b>Contact Number: </b><%= Listing.contact %></p>
+                        <p class="small-text"><b>email id: </b><%= Listing.email %></p>
+                        <p class="small-text"><b>Address: </b><%= Listing.address %></p>
+                        <p class="small-text"><b>Category: </b><%= Listing.category %></p>
+                    </p>
+
+                    <div class="btns mb-3">
+        <a href="/listings/<%= Listing._id %>/edit" class="btn btn-dark col-2 offset-7 edit-btn">Edit</a>
+
+        <form method="post" action="/listings/<%=Listing._id%>?_method=DELETE">
+            <button class="btn btn-dark offset-5 delete-btn">Delete</button>
+        </form>
+    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

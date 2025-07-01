@@ -1,0 +1,42 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <div class="show row mt-3">
+        <div class="col-6 offset-3">
+    <br/><br/>
+    <h3>Add New Contact</h3>
+    <form method="post" action="/listings" class="needs-validation"  novalidate>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input name="listing[name]" placeholder="eg:John Doe" type="text" class="form-control" id="name" required />
+            <div class="valid-feedback">Title looks good!</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="contact" class="form-label">Contact Number</label>
+            <input name="listing[contact]" placeholder="xxx-xxx-xxxx" type="text" class="form-control" id="contact" required />
+            <div class="valid-feedback">Title looks good!</div>
+        </div>
+
+       <div class="mb-3">
+            <label for="email" class="form-label">Email ID </label>
+            <input name="listing[email]" placeholder="example123@gmail.com" type="text" class="form-control" id="email">
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Address</label>
+            <input name="listing[address]" placeholder="Jaipur, Rajasthan" type="text" class="form-control" id="location">
+            <div class="invalid-feedback">Location should be valid!</div>
+        </div>
+
+         <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input name="listing[category]" placeholder="Friend,Family,Work..etc" type="text" class="form-control" id="category" required>
+            <div class="invalid-feedback">Location should be valid!</div>
+        </div>
+        <button class="btn btn-dark mb-3 add-btn">Add</button>
+        <br/> <br/>
+    </form>
+
+        </div>
+    </div>
+</body>

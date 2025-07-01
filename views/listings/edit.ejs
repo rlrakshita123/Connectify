@@ -1,0 +1,43 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <div class="show row mt-3">
+        <div class="col-6 offset-3">
+    <br/><br/>
+    <h3>Add New Contact</h3>
+    <form method="post" action="/listings/<%= Listing._id %>?_method=PUT" class="needs-validation"  novalidate>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input name="listing[name]" value="<%= Listing.name %>" type="text" class="form-control" id="name" required />
+            <div class="valid-feedback">Title looks good!</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="contact" class="form-label">Contact Number</label>
+            <input name="listing[contact]"  value="<%= Listing.contact %>" type="text" class="form-control" id="contact" required />
+            <div class="valid-feedback">Title looks good!</div>
+        </div>
+
+       <div class="mb-3">
+            <label for="email" class="form-label">Email ID </label>
+            <input name="listing[email]"  value="<%= Listing.email %>" type="text" class="form-control" id="email" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Address</label>
+            <input name="listing[address]"  value="<%= Listing.address %>" type="text" class="form-control" id="location" required>
+            <div class="invalid-feedback">Location should be valid!</div>
+        </div>
+
+         <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input name="listing[category]" value="<%= Listing.category %>" type="text" class="form-control" id="category" required>
+            <div class="invalid-feedback">Location should be valid!</div>
+        </div>
+        <button class="btn btn-dark mb-3 add-btn">Update</button>
+        <br/> <br/>
+    </form>
+
+        </div>
+    </div>
+</body>
