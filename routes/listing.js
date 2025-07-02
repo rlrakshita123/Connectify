@@ -15,10 +15,16 @@ const validateListing = (req, res, next) => {
     }
 }
 
+// 
+// router.get("/", wrapAsync(async(req,res) => {
+//     let allListings = await listing.find({});
+//     res.render("listings/index.ejs", {allListings});
+// }));
+
 //index route
-router.get("/", wrapAsync(async(req,res) => {
-    let allListings = await listing.find({});
-    res.render("listings/index.ejs", {allListings});
+router.get("/", isLoggedIn, wrapAsync(async (req, res) => {
+    const userListings = await listing.find({ user: req.user._id });
+    res.render("listings/index.ejs", { allListings: userListings });
 }));
 
 //new route
@@ -33,20 +39,41 @@ router.get("/new",isLoggedIn,wrapAsync(async(req,res) => {
 // create route
 router.post("/",isLoggedIn, validateListing, wrapAsync(async(req,res) => {
     const newListing = new listing(req.body.listing);
+    newListing.user = req.user._id;
     await newListing.save();
     req.flash("success", "New Listing Created");
     res.redirect("/listings");
 }));
 
+// // edit route
+// router.get("/:id/edit", isLoggedIn, wrapAsync(async(req,res) => {
+//     let {id} = req.params;
+//     const Listing = await listing.findById(id);
+//     if(!Listing) {
+//         req.flash("error","Listing you requested for does not exist!");
+//         return  res.redirect("/listings");
+//     }
+//     res.render("listings/edit.ejs", {Listing});
+// }));
+
+
 // edit route
-router.get("/:id/edit", isLoggedIn, wrapAsync(async(req,res) => {
-    let {id} = req.params;
+router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
     const Listing = await listing.findById(id);
-    if(!Listing) {
-        req.flash("error","Listing you requested for does not exist!");
-        return  res.redirect("/listings");
+
+    if (!Listing) {
+        req.flash("error", "Listing you requested does not exist!");
+        return res.redirect("/listings");
     }
-    res.render("listings/edit.ejs", {Listing});
+
+    // 👇 Authorization check
+    if (!Listing.user.equals(req.user._id)) {
+        req.flash("error", "You are not authorized to edit this listing!");
+        return res.redirect("/listings");
+    }
+
+    res.render("listings/edit.ejs", { Listing });
 }));
 
 // update route
@@ -69,12 +96,32 @@ router.get("/:id", wrapAsync(async(req,res) => {
     res.render("listings/show.ejs", {Listing});
 }));
 
-//delete route
-router.delete("/:id",isLoggedIn, wrapAsync(async(req,res) => {
-    let {id} = req.params;
-    await listing.findByIdAndDelete(id);
-    req.flash("success", "Listing Deleted");
-    res.redirect("/listings");
+// //delete route
+// router.delete("/:id",isLoggedIn, wrapAsync(async(req,res) => {
+//     let {id} = req.params;
+//     await listing.findByIdAndDelete(id);
+//     req.flash("success", "Listing Deleted");
+//     res.redirect("/listings");
+// }));
+
+// edit route
+router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    const Listing = await listing.findById(id);
+
+    if (!Listing) {
+        req.flash("error", "Listing you requested does not exist!");
+        return res.redirect("/listings");
+    }
+
+    // 👇 Authorization check
+    if (!Listing.user.equals(req.user._id)) {
+        req.flash("error", "You are not authorized to edit this listing!");
+        return res.redirect("/listings");
+    }
+
+    res.render("listings/edit.ejs", { Listing });
 }));
+
 
 module.exports = router;

@@ -7,6 +7,12 @@ const listingSchema = new Schema( {
     email: String,
     address: String,
     category:String,
+
+     user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    }
 });
 
 const Listing = mongoose.model("Listing", listingSchema);
